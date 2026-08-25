@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoCollect Admin</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+.admin-wrap{padding:70px 0}.table-wrap{overflow:auto}.data-table{width:100%;border-collapse:collapse;min-width:900px;background:white}.data-table th,.data-table td{padding:13px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.data-table th{background:#eef8f2;color:var(--green-dark)}.back{margin-bottom:22px;display:inline-block}
+</style>
+</head>
+<body>
+<header class="site-header"><nav class="navbar container"><a class="brand" href="/"><span class="brand-mark">♻</span><span>Eco<span>Collect</span></span></a><a class="btn btn-secondary" href="/">← Website</a></nav></header>
+<main class="admin-wrap"><div class="container">
+<p class="eyebrow">COORDINATOR PANEL</p><h1 style="font-size:48px">Pickup Requests</h1>
+<div class="card table-wrap" style="padding:10px;margin-top:30px">
+<table class="data-table">
+<thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Area</th><th>PIN</th><th>E-Waste</th><th>Preferred Date</th><th>Status</th><th>Created</th></tr></thead>
+<tbody>
+{% for r in requests %}
+<tr><td>{{ r['id'] }}</td><td>{{ r['name'] }}</td><td>{{ r['phone'] }}</td><td>{{ r['area'] }}</td><td>{{ r['pincode'] }}</td><td>{{ r['items'] }}</td><td>{{ r['preferred_date'] or '-' }}</td><td>{{ r['status'] }}</td><td>{{ r['created_at'] }}</td></tr>
+{% else %}
+<tr><td colspan="9">No requests submitted yet.</td></tr>
+{% endfor %}
+</tbody></table></div>
+</div></main>
+</body></html>

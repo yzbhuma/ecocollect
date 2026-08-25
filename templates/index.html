@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCollect | E-Waste Collection Coordinator Network</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <nav class="navbar container">
+    <a class="brand" href="#home"><span class="brand-mark">♻</span><span>Eco<span>Collect</span></span></a>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#request">Request Pickup</a>
+      <a href="#how">How It Works</a>
+      <a href="#drive">E-Waste Drive</a>
+      <a href="#centers">Recycling Centers</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">COMMUNITY • RECYCLING • ACTION</p>
+      <h1>Turn old electronics into a <span>cleaner tomorrow.</span></h1>
+      <p class="hero-text">EcoCollect connects households with local pickup volunteers so unwanted laptops, chargers, batteries, phones and other electronics can reach responsible recycling channels.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#request">Request a Pickup</a>
+        <a class="btn btn-secondary" href="#how">See How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong id="statRequests">0</strong><span>requests logged</span></div>
+        <div><strong id="statItems">0</strong><span>items listed</span></div>
+        <div><strong>3</strong><span>volunteers ready</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="device-orbit">♻</div>
+      <div class="hero-card-content">
+        <p class="card-label">COMMUNITY GOAL</p>
+        <h3>Collect responsibly.<br>Recycle safely.</h3>
+        <p>Start with one household, then organize a mini e-waste drive in your housing colony.</p>
+        <div class="progress-wrap">
+          <div class="progress-info"><span>Drive progress</span><b id="driveProgressText">0%</b></div>
+          <div class="progress"><span id="driveProgress"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section light" id="request">
+<div class="container">
+  <div class="section-heading">
+    <div><p class="eyebrow">01 • REQUEST PICKUP</p><h2>Tell us what you want to recycle.</h2></div>
+    <p>Submit your household details and e-waste list.</p>
+  </div>
+
+  <form class="request-form card" id="pickupForm">
+    <div class="form-grid">
+      <div class="field"><label for="name">Full name *</label><input id="name" name="name" required placeholder="e.g. Bhumika Kante"></div>
+      <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" required placeholder="e.g. 99999 99999"></div>
+      <div class="field"><label for="area">Area / Housing colony *</label><input id="area" name="area" required placeholder="e.g. Rees"></div>
+      <div class="field"><label for="pincode">PIN code *</label><input id="pincode" name="pincode" inputmode="numeric" maxlength="6" required placeholder="410206"></div>
+      <div class="field full"><label for="address">Pickup address *</label><textarea id="address" name="address" required rows="2" placeholder="Flat/House no., building, street..."></textarea></div>
+      <div class="field full"><label for="items">What e-waste do you have? *</label><textarea id="items" name="items" required rows="3" placeholder="Example: 1 old laptop, 3 broken chargers, 2 mobile phones"></textarea><small>Separate different items with commas.</small></div>
+      <div class="field"><label for="preferredDate">Preferred pickup date</label><input id="preferredDate" name="preferredDate" type="date"></div>
+      <div class="field"><label for="notes">Additional notes</label><input id="notes" name="notes" placeholder="Gate timing, accessibility, etc."></div>
+    </div>
+    <div class="form-footer">
+      <label class="check"><input type="checkbox" required> I confirm these items are e-waste intended for recycling.</label>
+      <button class="btn btn-primary" type="submit">Submit Pickup Request →</button>
+    </div>
+    <div class="form-message" id="formMessage"></div>
+  </form>
+</div>
+</section>
+
+<section class="section" id="how">
+<div class="container">
+  <div class="center-heading"><p class="eyebrow">02 • HOW IT WORKS</p><h2>From household to responsible recycling.</h2><p>Designed for a student-led community e-waste collection project.</p></div>
+  <div class="steps">
+    <article class="step card"><span class="step-no">01</span><div class="step-icon">📝</div><h3>Submit a request</h3><p>A citizen lists old electronics and shares a convenient pickup location.</p></article>
+    <article class="step card"><span class="step-no">02</span><div class="step-icon">📍</div><h3>Get matched</h3><p>The coordinator reviews the request and assigns a local volunteer.</p></article>
+    <article class="step card"><span class="step-no">03</span><div class="step-icon">🚲</div><h3>Collect safely</h3><p>The volunteer confirms the pickup and brings collected items together.</p></article>
+    <article class="step card"><span class="step-no">04</span><div class="step-icon">♻️</div><h3>Recycle responsibly</h3><p>Collected material is handed over to a certified e-waste recycler.</p></article>
+  </div>
+</div>
+</section>
+
+<section class="section dark-section" id="drive">
+<div class="container drive-grid">
+  <div><p class="eyebrow">03 • MINI E-WASTE DRIVE</p><h2>Make your housing colony the collection point.</h2><p class="muted">The dashboard below reads the saved records from SQLite and shows the community collection progress.</p></div>
+  <div class="drive-board">
+    <div class="board-top"><span>DATABASE DRIVE BOARD</span><span class="status-dot">● ACTIVE</span></div>
+    <div class="board-metrics">
+      <div><strong id="driveHouseholds">0</strong><span>households</span></div>
+      <div><strong id="driveItems">0</strong><span>items</span></div>
+      <div><strong id="driveKg">0 kg</strong><span>estimated weight</span></div>
+    </div>
+    <div class="collection-list" id="collectionList"><p class="empty-state">Loading saved requests...</p></div>
+  </div>
+</div>
+</section>
+
+<section class="section light" id="centers">
+<div class="container">
+  <div class="section-heading"><div><p class="eyebrow">04 • RECYCLING CENTERS</p><h2>Certified handover matters.</h2></div><p>Replace the sample information with the certified recycler you actually contact during your fieldwork.</p></div>
+  <div class="center-grid">
+    <article class="center-card card"><div class="center-icon">🏢</div><div><span class="tag">Certified Recycler – Local Partner</span><h3>GreenTech E-Waste Recycling Center</h3><p>Address: Andheri East, Mumbai</p><p>Phone: 90000 11111</p></div></article>
+    <article class="center-card card"><div class="center-icon">🏢</div><div><span class="tag">Certified Recycler – Local Partner</span><h3>CleanEarth E-Waste Center</h3><p>Address: Navi Mumbai, Maharashtra</p><p>Phone: 90000 88888</p></div></article>
+    <article class="center-card card"><div class="center-icon">🏢</div><div><span class="tag">Certified Recycler – Local Partner</span><h3>Responsible Recyclers</h3><p>Address: Vashi, Navi Mumbai</p><p>Phone: 90000 55555</p></div></article>
+    <article class="center-card card"><div class="center-icon">🏢</div><div><span class="tag">Certified Recycler – Local Partner</span><h3>ReNew Electronics Recycling</h3><p>Address: Thane West, Maharashtra</p><p>Phone: 90000 25252</p></div></article>
+    <article class="verification card"><h3>Recycler verification checklist</h3><label><input type="checkbox"> Confirm certification / authorization</label><label><input type="checkbox"> Record center name and address</label><label><input type="checkbox"> Save official contact details</label><label><input type="checkbox"> Ask what e-waste categories they accept</label><label><input type="checkbox"> Keep handover / receipt evidence</label></article>
+  </div>
+  
+</div>
+</section>
+
+<section class="section">
+<div class="container cta">
+  <div><p class="eyebrow">ADMIN / COORDINATOR</p><h2>View all submitted pickup requests in one place.</h2></div>
+  <a class="btn btn-primary" href="/admin">Open Admin Dashboard →</a>
+</div>
+</section>
+</main>
+
+<footer style="text-align: center; padding: 20px; background-color: #0b2119; color: white;">
+    <div>
+        © 2026 <strong>EcoCollect</strong> | E-Waste Collection Coordinator Network. All rights reserved.
+    </div>
+
+    <div style="margin-top: 8px;">
+        Recycle Today. Protect Tomorrow. ♻️
+    </div>
+</footer>
+</body>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
